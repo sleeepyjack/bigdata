@@ -6,11 +6,6 @@
 // | a b c |   |x|    | ax + by + cz |
 // | d e f | * |y| =  | dx + ey + fz |
 // | g h i |   |z|    | gx + hy + iz |
-// 
-// Entweder man mappt die Inputs direkt auf (K,V) = ( (i,j) , Zahlenwert) 
-//-> dann weiß ich nicht wie ich den Reducer schreiben soll, sodass er parallel arbeiten kann
-// Oder ich mappe auf (K,V) = (i, ZahlenWert). Dann weiß ich nicht wie ich sinnvoll den Multiplikationsvektor unterbringen soll
-// Hadoop nervt, das scheiß DoubleListWritable macht auch keinen Sinn und ich hätte besser KI belegen sollen -.-
 
 package b3a3;
 import org.apache.hadoop.io.Writable;

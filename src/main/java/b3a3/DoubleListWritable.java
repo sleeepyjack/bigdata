@@ -1,3 +1,6 @@
+// Ich weiß nicht wirklich wozu die Klasse dienen soll.
+// Lediglich von Input zum KV-Paar würde das Sinn machen, macht aber nichts einfacher
+
 package b3a3;
 
 import org.apache.hadoop.io.Writable;
