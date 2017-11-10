@@ -30,7 +30,7 @@ public static class Map extends Mapper<Object, Text, NullWritable, FloatWritable
     	if (!value.toString().startsWith("#")) { //if input is no comment
     		String[] tokens = value.toString().split("\t");
     		
-    		if (tokens.length > col) {
+    		if (tokens.length > col) { //sanity check
     			v.set(Float.parseFloat(tokens[col]));
     			context.write(NullWritable.get(), v); //only write value
 			}
