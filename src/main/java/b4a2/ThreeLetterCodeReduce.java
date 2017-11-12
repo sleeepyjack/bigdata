@@ -3,6 +3,7 @@ package b4a2;
 
 import java.io.IOException;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Counter;
 import org.apache.hadoop.mapreduce.Reducer;
 import java.net.URI;
 import java.util.StringTokenizer;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import org.apache.hadoop.fs.Path;
 
 public class ThreeLetterCodeReduce extends Reducer<Text, Text, Text, Text> {
+	static enum CountersEnum { AMINO_ACIDS }
 
 
     public void reduce(Text proteinIn, Iterable<Text> iterableInput, Context context) throws IOException, InterruptedException {
@@ -32,6 +34,7 @@ public class ThreeLetterCodeReduce extends Reducer<Text, Text, Text, Text> {
 			
 		}
 		inputBfr.close();
+		Counter counter = context.getCounter(CountersEnum.class.getName(), CountersEnum.AMINO_ACIDS.toString());
     	
     	
     	//Der Output erscheint gar nicht erst im hadoop output ...
@@ -45,6 +48,8 @@ public class ThreeLetterCodeReduce extends Reducer<Text, Text, Text, Text> {
 	    	for (int i = 0; i < size; i++ ) {
 	    		oneLetter = Character.toString(inputString.charAt(i));
 	    		output += (OneToThree.get(oneLetter));
+	    		counter.increment(1);
+
 	    	}
 	    	context.write(new Text(proteinIn.toString()), new Text(output));
 	    }
