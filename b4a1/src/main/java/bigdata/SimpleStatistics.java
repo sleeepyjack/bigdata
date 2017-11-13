@@ -1,4 +1,4 @@
-package b4a1;
+package bigdata;
 
 import java.io.IOException;
 
@@ -72,7 +72,7 @@ public static class Map extends Mapper<Object, Text, NullWritable, FloatWritable
     job.setMapOutputKeyClass(NullWritable.class);
     job.setMapOutputValueClass(FloatWritable.class);
     
-    //job.setCombinerClass(Reduce.class);
+    //job.setCombinerClass(Reduce.class); //use reducer as combiner
     job.setReducerClass(Reduce.class);
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(FloatWritable.class);
