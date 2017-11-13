@@ -1,8 +1,7 @@
 package b4a1;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
@@ -14,7 +13,9 @@ import org.junit.Test;
 public class SimpleStatisticsTest {
 	@Test
 	public void testMapper() throws Exception {
+		
 		new MapDriver<Object, Text, NullWritable, FloatWritable>()
+		
 		.withMapper(new SimpleStatistics.Map())
 		
 		.withInput(NullWritable.get(), new Text("#Name	v1	v2"))
@@ -32,18 +33,29 @@ public class SimpleStatisticsTest {
 	@Test
 	public void testReducer() throws Exception {
 		
+		ArrayList<FloatWritable> values = new ArrayList<FloatWritable>();
+		values.add(new FloatWritable((float) 2.0));
+		values.add(new FloatWritable((float) 9.3));
+		values.add(new FloatWritable((float) 0.7));
+		
 		new ReduceDriver<NullWritable, FloatWritable, Text, FloatWritable>()
+		
 		.withReducer(new SimpleStatistics.Reduce())
-		.withInput(new Text("bla"), blaValues) //TODO
-		.withInput(new Text("doing"), doingValues)
-		.withOutput(new Text("bla"), new IntWritable(2))
-		.withOutput(new Text("doing"), new IntWritable(1))
+		
+		.withInput(NullWritable.get(), values)
+		
+		.withOutput(new Text("Max"), new FloatWritable((float) 9.3))
+		.withOutput(new Text("Sum"), new FloatWritable((float) 12.0))
+		.withOutput(new Text("Avg"), new FloatWritable((float) 4.0))
+		
 		.runTest();
 	}
 	
 	@Test
 	public void testMapReduce() throws Exception {
+		
 	new MapReduceDriver<Object, Text, NullWritable, FloatWritable, Text, FloatWritable>()
+	
 	.withMapper(new SimpleStatistics.Map())
 	
 	.withInput(NullWritable.get(), new Text("#Name	v1	v2"))
@@ -53,7 +65,6 @@ public class SimpleStatisticsTest {
 	
 	.withReducer(new SimpleStatistics.Reduce())
 	
-	.withOutput(new Text("Min"), new FloatWritable((float) 0.7))
 	.withOutput(new Text("Max"), new FloatWritable((float) 9.3))
 	.withOutput(new Text("Sum"), new FloatWritable((float) 12.0))
 	.withOutput(new Text("Avg"), new FloatWritable((float) 4.0))

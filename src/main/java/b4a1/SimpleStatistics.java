@@ -44,21 +44,18 @@ public static class Map extends Mapper<Object, Text, NullWritable, FloatWritable
       float sum = 0;
       float num = 0;
       float max = Float.MIN_VALUE;
-      float min = Float.MAX_VALUE;
       float avg;
       
       for (FloatWritable val : values) {
         sum += val.get();
         max  = (val.get() > max) ? val.get() : max;
-        min  = (val.get() < min) ? val.get() : min;
         num++;
       }
       
       avg = sum/num;
       
-      context.write(new Text("Sum"), new FloatWritable(sum));
       context.write(new Text("Max"), new FloatWritable(max));
-      context.write(new Text("Min"), new FloatWritable(min));
+      context.write(new Text("Sum"), new FloatWritable(sum));
       context.write(new Text("Avg"), new FloatWritable(avg));
     }
   }
