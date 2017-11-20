@@ -26,7 +26,7 @@ public class SecondarySort {
     job.setInputFormatClass(KeyValueTextInputFormat.class);
 
     job.setSortComparatorClass(SecondarySortComparator.class);
-    //Mapper sollte erste Zeile als Key und 
+    //K,V Paare aus Mapper sind erste 
     job.setMapperClass(SecondarySortMap.class);
     job.setMapOutputKeyClass(Text.class);
     job.setMapOutputValueClass(Text.class);
