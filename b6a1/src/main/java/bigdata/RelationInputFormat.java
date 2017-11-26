@@ -11,10 +11,10 @@ import org.apache.hadoop.mapred.Reporter;
 
 public class RelationInputFormat extends FileInputFormat<Text, TupleWritable> {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public RecordReader<Text, TupleWritable> getRecordReader(InputSplit arg0, JobConf arg1, Reporter arg2) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		return (RecordReader<Text, TupleWritable>) new RelationRecordReader();
 	}
 
 }
