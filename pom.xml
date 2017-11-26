@@ -2,6 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>gruppe6</groupId>
   <artifactId>bigdata</artifactId>
+  <packaging>pom</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <dependencies>
   	<dependency>
@@ -27,4 +28,11 @@
 		<scope>test</scope>
 	</dependency>
   </dependencies>
+  <modules>
+	<module>b4a1</module>
+	<module>b4a2</module>
+	<module>b3a1</module>
+	<module>b3a3</module>
+  <module>b6a1</module>
+  </modules>
 </project>
