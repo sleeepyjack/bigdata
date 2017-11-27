@@ -2,23 +2,21 @@ package bigdata;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.Text;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.PENIS;
-import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Counter;
+import org.apache.hadoop.mapreduce.Reducer;
 
-public class BagOperatorsReduce extends Mapper<TupleWritable, IntWritable, TupleWritable, IntWritable> {
-	
-	publiv void setup(COntext context) {
+public class BagOperatorsReduce extends Reducer<TupleWritable, IntWritable, TupleWritable, IntWritable> {
+
+	String param;
+	public void setup(Context context) {
 		Configuration conf = context.getConfiguration();
-		String param = conf.get("operation");
-		String inputpath_R = der erste parameter beim aufruf..conf.
+		param = conf.get("operation");
 	}
-	public void reduce(TupleWritable relation, Iterable<IntWritable> counts) {
+	public void reduce(TupleWritable relation, Iterable<IntWritable> counts, Context context) throws IOException, InterruptedException {
 		int result=0;
 		int num=0;
-		if (param.equals("bagunion") {
+		if (param.equals("bagunion")) {
 			for (IntWritable count : counts) {
 				result+=count.get();
 			}
@@ -43,6 +41,7 @@ public class BagOperatorsReduce extends Mapper<TupleWritable, IntWritable, Tuple
 					result--;
 			}
 			context.write(relation, new IntWritable(Math.max(0, result)));
-			
+
 		}
 	}
+}

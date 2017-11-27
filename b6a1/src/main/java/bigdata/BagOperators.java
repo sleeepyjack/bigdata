@@ -2,6 +2,7 @@ package bigdata;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -19,18 +20,20 @@ public class BagOperators {
     String remainingArguments[] = options.getRemainingArgs();
         
     Job job = Job.getInstance(conf, "BagOperators");
+    //Set first Relationname as Relation "R"
+    conf.set("RelationR",remainingArguments[0]); 
 
     job.setJarByClass(BagOperators.class);
     job.setInputFormatClass(RelationInputFormat.class);
     
     job.setMapperClass(BagOperatorsMap.class);
-    //Input für Mapper: (Pfad,ListWritable)
+    //Input fï¿½r Mapper: (Pfad,ListWritable)
     //Ausgabe des Mappers sind Tupel (
-    job.setMapOutputKeyClass(ListWritable.class);
+    job.setMapOutputKeyClass(TupleWritable.class);
     job.setMapOutputValueClass(IntWritable.class);
     
     job.setReducerClass(BagOperatorsReduce.class);
-    job.setOutputKeyClass(ListWritable.class);
+    job.setOutputKeyClass(TupleWritable.class);
     job.setOutputValueClass(IntWritable.class);
     
     FileInputFormat.addInputPath(job, new Path(remainingArguments[0]));
