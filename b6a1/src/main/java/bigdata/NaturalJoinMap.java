@@ -2,6 +2,7 @@
 package bigdata;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -19,11 +20,20 @@ public class NaturalJoinMap extends Mapper<Text, TupleWritable, Text, TupleWrita
 	@Override
 	public void map(Text inputpath, TupleWritable relation, Context context) throws IOException,InterruptedException {
 		//String inputpathR = "abc";		//der_erste_parameter_beim_aufruf;
+		List<String> temp;
 		if (inputpath.toString().equals(inputpathR)) {
-			context.write(new Text(relation.getAttributes().get(indexR)), relation);
+			temp = relation.getAttributes();
+			temp.add(0,"R");
+			TupleWritable value = new TupleWritable();
+			value.setAttributes(temp);
+			context.write(new Text(relation.getAttributes().get(indexR)), value);
 		}
 		else {
-			context.write(new Text(relation.getAttributes().get(indexL)), relation);
+			temp = relation.getAttributes();
+			temp.add(0,"L");
+			TupleWritable value = new TupleWritable();
+			value.setAttributes(temp);
+			context.write(new Text(relation.getAttributes().get(indexL)), value);
 		}
 	}	
 }
