@@ -95,13 +95,16 @@ public class RelationRecordReader extends RecordReader<Text, TupleWritable> {
 		while (pos < end) {
 			Text line = new Text();
 			newSize = reader.readLine(line);
-			value.setAttributes(Arrays.asList(line.toString().split("\t")));
-			
-			if (newSize == 0) {
-				break;
-			}
-			
 			pos += newSize;
+			
+			if (!line.toString().startsWith("#")) {
+				value.setAttributes(Arrays.asList(line.toString().split("\t")));
+				
+				if (newSize == 0) {
+					break;
+				}
+			} 
+			
 			
 		}
 		
