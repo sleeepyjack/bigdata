@@ -3,17 +3,17 @@ package bigdata;
 import java.io.IOException;
 
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.InputSplit;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.RecordReader;
-import org.apache.hadoop.mapred.Reporter;
+//import org.apache.hadoop.mapreduce.FileInputFormat;
+import org.apache.hadoop.mapreduce.InputSplit;
+import org.apache.hadoop.mapreduce.RecordReader;
+import org.apache.hadoop.mapreduce.TaskAttemptContext;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 
 public class RelationInputFormat extends FileInputFormat<Text, TupleWritable> {
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public RecordReader<Text, TupleWritable> getRecordReader(InputSplit arg0, JobConf arg1, Reporter arg2) throws IOException {
+	public RecordReader<Text, TupleWritable> createRecordReader(InputSplit arg0, TaskAttemptContext arg1)
+			throws IOException, InterruptedException {
 		return (RecordReader<Text, TupleWritable>) new RelationRecordReader();
 	}
 
